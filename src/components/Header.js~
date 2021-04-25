@@ -1,0 +1,16 @@
+import PropTypes from 'prop-types'
+
+const Header = () = {
+
+     return(
+                    <header className="header">
+
+			    <button> Add Task </button>
+
+		    </header>
+		    )
+		   
+		   
+}
+
+export default Header

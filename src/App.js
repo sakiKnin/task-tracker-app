@@ -1,24 +1,43 @@
-import logo from './logo.svg';
 import './App.css';
+import Header from './components/Header'
+import AddTask from './components/AddTask'
+import Tasks from './components/Tasks'
+
+import { fetchTasks } from './redux'
+
+import { Provider } from 'react-redux'
+import store from './redux/store'
+
+import { useEffect, useState } from 'react'
 
 function App() {
+
+  const [ tasks, setTasks ] = useState([])
+
+  useEffect( () => {
+
+		const getData = async () => {
+			
+			const tasksFromServer = await fetchTasks()
+
+			setTasks(tasksFromServer)
+
+		}
+
+		getData()
+
+		console.log(tasks)
+
+	}, [] )
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+	<Provider store={store}>
+	  	<div className="container">
+	      		<Header/>
+			<AddTask/>
+	      		{tasks.length > 0 ? (<Tasks/>):"No tasks for you..."}
+          	</div>
+	</Provider>
   );
 }
 
