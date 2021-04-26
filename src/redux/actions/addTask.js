@@ -2,6 +2,7 @@ import store from '../store'
 import { taskAdded } from '../reducersTypes'
 
 export const addTask = async (task) => {
+
 	const res = await fetch(`http://localhost:5000/tasks`,{
 		method: 'POST',
 		headers: {

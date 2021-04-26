@@ -5,12 +5,11 @@ import Tasks from './components/Tasks'
 
 import { fetchTasks } from './redux'
 
-import { Provider } from 'react-redux'
-import store from './redux/store'
-
+import { connect } from 'react-redux'
+ 
 import { useEffect, useState } from 'react'
 
-function App() {
+function App({show}) {
 
   const [ tasks, setTasks ] = useState([])
 
@@ -26,19 +25,25 @@ function App() {
 
 		getData()
 
-		console.log(tasks)
-
 	}, [] )
 
   return (
-	<Provider store={store}>
+	 
 	  	<div className="container">
-	      		<Header/>
-			<AddTask/>
+	      		<Header />
+			{show?<AddTask/>:''}
 	      		{tasks.length > 0 ? (<Tasks/>):"No tasks for you..."}
           	</div>
-	</Provider>
+	 
   );
 }
 
-export default App;
+const mapStateToProps = state => {
+	return {
+		show: state.show		
+	}
+}
+
+export default connect(
+	mapStateToProps
+)(App)

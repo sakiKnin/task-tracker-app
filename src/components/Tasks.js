@@ -1,18 +1,24 @@
 import Task from './Task'
+import { connect } from 'react-redux'
+ 
+import { removeTask } from '../redux'
 
-import store from '../redux/store'
-
-const  Tasks = () => {
-	
-	console.log(store.getState().show)	
+const  Tasks = ({tasks}) => {
 
 	return(
 		<>
-		{store.getState().state[0].map((task) => (<Task key={task.id} task={task}/>))}
-		
+		  { tasks.map((task) => (<Task key={task.id} task={task} removeTask={removeTask}/>)) }
 		</>
 	)
 	
 }
 
-export default Tasks
+const mapStateToProps = state => {
+	return {
+		tasks: state.state[0]
+	}
+}
+
+export default connect(
+	mapStateToProps 
+)(Tasks)
